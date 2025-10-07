@@ -49,7 +49,7 @@ class BrandedHeaderLine extends StatelessWidget {
         SizedBox(width: 8),
         Flexible(
           child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('SmartStay PG Manager', style: title, overflow: TextOverflow.ellipsis),
+            Text('PG Book', style: title, overflow: TextOverflow.ellipsis),
             Text('by mVruksha Softwares', style: sub, overflow: TextOverflow.ellipsis),
           ]),
         ),

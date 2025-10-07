@@ -34,7 +34,7 @@ class _LandingPageState extends State<LandingPage> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SmartStay PG Manager'),
+        title: const Text('PG Book'),
         foregroundColor: Colors.white,
         backgroundColor: Theme.of(context).colorScheme.primary,
         flexibleSpace: Container(

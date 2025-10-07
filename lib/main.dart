@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SmartStay PG Manager',
+      title: 'PG Book',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
@@ -146,7 +146,7 @@ class _AppHomePageState extends State<AppHomePage> {
           children: [
             BrandedLogo(height: 28, color: Colors.white),
             SizedBox(width: 12),
-            Flexible(child: Text('SmartStay PG Manager', overflow: TextOverflow.ellipsis)),
+            Flexible(child: Text('PG Book', overflow: TextOverflow.ellipsis)),
           ],
         ),
         foregroundColor: Colors.white,
@@ -224,7 +224,7 @@ class _AppHomePageState extends State<AppHomePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('SmartStay PG Manager', style: theme.textTheme.headlineMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w900)),
+                              Text('PG Book', style: theme.textTheme.headlineMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w900)),
                               Text('by mVruksha Softwares', style: theme.textTheme.titleSmall?.copyWith(color: Colors.white.withValues(alpha: 0.8))),
                             ],
                           ),
@@ -548,7 +548,7 @@ class _ContactFormState extends State<_ContactForm> {
     return Form(
       key: _formKey,
       child: Column(children: [
-        Align(alignment: Alignment.centerLeft, child: Text('SmartStay PG Manager (by mVruksha Softwares)', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600))),
+        Align(alignment: Alignment.centerLeft, child: Text('PG Book (by mVruksha Softwares)', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600))),
         const SizedBox(height: 8),
         Row(children: [
           Expanded(child: TextFormField(controller: _name, decoration: const InputDecoration(labelText: 'Your Name'), validator: (v) => (v == null || v.trim().isEmpty) ? 'Enter your name' : null)),

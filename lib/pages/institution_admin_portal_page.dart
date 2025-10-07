@@ -474,7 +474,7 @@ appBar: AppBar(
 toolbarHeight: 56,
 elevation: 0,
 title: Text(
-_instName == null || _instName!.isEmpty ? 'SmartStay PG Manager' : 'SmartStay PG Manager - ${_instName!}',
+_instName == null || _instName!.isEmpty ? 'PG Book' : 'PG Book - ${_instName!}',
 style: Theme.of(context).textTheme.titleMedium,
 overflow: TextOverflow.ellipsis,
 ),
