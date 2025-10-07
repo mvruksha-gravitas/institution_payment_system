@@ -1,0 +1,86 @@
+name: Build & Deploy Flutter Web to Firebase Hosting
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  PROJECT_ID: institution-payment-system      # <- your Firebase project ID
+  SITE_ID: institution-payment-system         # <- your Firebase Hosting site ID
+  FLUTTER_VERSION: "3.35.2"                   # match your local flutter --version
+
+jobs:
+  build:
+    name: Build Flutter Web
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+
+      - name: Flutter Pub Get
+        run: flutter pub get
+
+      # Optional but recommended for smaller JS output on latest Flutter
+      # Remove --wasm if it causes issues.
+      - name: Build (release)
+        run: flutter build web --release
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+
+  deploy_preview:
+    name: Deploy Preview (PR)
+    needs: build
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+
+      - name: Deploy to Firebase Hosting (preview channel)
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_INSTITUTION_PAYMENT_SYSTEM }}
+          projectId: ${{ env.PROJECT_ID }}
+          channelId: preview-${{ github.event.pull_request.number }}
+          target: ${{ env.SITE_ID }}
+          expires: 7d
+
+  deploy_live:
+    name: Deploy Live (main)
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+
+      - name: Deploy to Firebase Hosting (live)
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_INSTITUTION_PAYMENT_SYSTEM }}
+          projectId: ${{ env.PROJECT_ID }}
+          channelId: live
+          target: ${{ env.SITE_ID }}
