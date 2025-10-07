@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Institution collection - Main institution documents
+    match /institutions/{institutionId} {
+      // Allow anyone to create new institution registration requests
+      allow create: if true;
+      // Allow read/write access for approved institutions and admin management
+      allow read, update, delete: if true;
+      
+      // Students subcollection under each institution
+      match /students/{studentId} {
+        // Allow read/write for institution and student management
+        allow read, write: if true;
+        
+        // Student fees subcollection
+        match /fees/{feeId} {
+          allow read, write: if true;
+        }
+      }
+      
+      // Payments subcollection under each institution
+      match /payments/{paymentId} {
+        allow read, write: if true;
+      }
+      
+      // Rooms subcollection under each institution
+      match /rooms/{roomId} {
+        allow read, write: if true;
+        
+        // Beds subcollection under each room
+        match /beds/{bedId} {
+          allow read, write: if true;
+        }
+      }
+      
+      // Complaints subcollection under each institution
+      match /complaints/{complaintId} {
+        allow read, write: if true;
+      }
+    }
+    
+    // Admin configuration - allow read and write for counter management
+    match /admin_config/{configId} {
+      allow read, write: if true;
+    }
+    
+    // Global collections for cross-institution queries
+    // Note: In a production environment, you would want to implement
+    // proper authentication-based rules instead of allowing all access
+  }
+}
